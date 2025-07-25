@@ -1,0 +1,4 @@
+email, hashing_method, hashed_password
+
+tamalanwaronline@gmail.com, "sha256", "21151bf9587544417cc89ca60c252f00d33961563f95113fcc6d73153f433b3b"
+tamal.a.chowdhury@gmail.com, "sha256", "1f6b3a868a7f6b772b878c06a3f0ac6f6236fdc2f2b6cb7a4ac2699c71a54cc5"
