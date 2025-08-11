@@ -21,25 +21,6 @@ export const workflowSettings: WorkflowSettings = {
   },
 }
 
-// This workflow requires you to set up the Kinde management API
-// You can do this by going to the Kinde dashboard.
-//
-// Create an M2M application with the following scopes enabled:
-// * read:application_properties
-// * read:organizations
-// * read:applications
-//
-// In Settings -> Environment variables set up the following variables with the
-// values from the M2M application you created above:
-//
-// * KINDE_WF_M2M_CLIENT_ID
-// * KINDE_WF_M2M_CLIENT_SECRET - Ensure this is setup with sensitive flag
-// enabled to prevent accidental sharing
-//
-// Add a property to your M2M application with the key `org_code` and the value
-// of the org code you want to use for the M2M token. This will be used to
-// correlate the M2M token with the org data.
-
 export default async function Workflow(event: onM2MTokenGeneratedEvent) {
   // Get a token for Kinde management API
   const kindeAPI = await createKindeAPI(event)
@@ -60,7 +41,7 @@ export default async function Workflow(event: onM2MTokenGeneratedEvent) {
 
   // Get org data from Kinde management API
   const { data: orgsData } = await kindeAPI.get({
-    endpoint: `organizations`,
+    endpoint: "organizations",
   })
 
   const organizations =
