@@ -50,15 +50,20 @@ export default async function Workflow(event: onM2MTokenGeneratedEvent) {
   const { data } = await kindeAPI.get({
     endpoint: `applications/${clientId}/properties`,
   });
-  const { appProperties } = data;
+  const properties = data?.properties ?? [];
 
   // Get the org code property to make the correlation
-  const orgCode = appProperties.find((prop) => prop.key === "org_code");
+  const orgProp = properties.find((p: any) => p.key === "org_code");
+  if (!orgProp?.value) {
+    throw new Error("Missing org_code application property");
+  }
 
   // Get org data from Kinde management API
-  const { data: org } = await kindeAPI.get({
-    endpoint: `organization?code=${orgCode.value}`,
+  const { data: orgList } = await kindeAPI.get({
+    endpoint: `organizations`,
   });
+
+  const org = orgList?.data?.organizations?.find((o: any) => o.code === orgProp.value)
 
   // set up types for the custom claims
   const m2mToken = m2mTokenClaims<{
